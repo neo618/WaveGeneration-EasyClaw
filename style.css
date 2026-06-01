@@ -1,0 +1,554 @@
+/* ===== 全局重置 ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #1a1d23;
+  --bg-secondary: #21252b;
+  --bg-panel: #282c34;
+  --bg-input: #1e2127;
+  --border-color: #3a3f4b;
+  --border-active: #528bff;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a8b8;
+  --text-label: #c0c8d4;
+  --accent-green: #00e676;
+  --accent-orange: #ff9100;
+  --accent-cyan: #00bcd4;
+  --accent-red: #ef5350;
+  --accent-blue: #528bff;
+  --channel-colors: #ff6b6b, #4ecdc4, #ffe66d, #a29bfe, #fd79a8,
+                    #00cec9, #fdcb6e, #6c5ce7, #e17055, #74b9ff;
+  --font-main: 'Segoe UI', 'Microsoft YaHei', 'Source Han Sans CN', sans-serif;
+  --font-mono: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 14px;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ===== 滚动条 ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5f6b;
+}
+
+/* ===== App 容器 ===== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ===== 标题栏 ===== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  flex-shrink: 0;
+}
+.app-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+.header-version {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* ===== 主内容 ===== */
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ===== 配置面板（左侧）===== */
+.config-panel {
+  width: 420px;
+  min-width: 420px;
+  background: var(--bg-secondary);
+  border-right: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+.panel-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* ===== 参数网格 ===== */
+.param-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.param-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.param-item label {
+  font-size: 12px;
+  color: var(--text-label);
+  font-weight: 500;
+}
+
+.param-item .unit {
+  color: var(--text-secondary);
+  font-size: 11px;
+  margin-left: 2px;
+}
+
+/* ===== 输入控件 ===== */
+input[type="number"],
+input[type="text"] {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 8px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  outline: none;
+  transition: border-color 0.15s;
+  letter-spacing: 0.5px;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+  border-color: var(--border-active);
+}
+
+input[type="number"] {
+  width: 100%;
+}
+
+select {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 8px;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23a0a8b8' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+}
+
+select:focus {
+  border-color: var(--border-active);
+}
+
+/* ===== 按钮 ===== */
+.btn {
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-main);
+  border: 1px solid transparent;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--accent-green);
+  color: #000;
+  border-color: var(--accent-green);
+  font-size: 15px;
+  padding: 10px 32px;
+}
+.btn-primary:hover {
+  background: #00c853;
+  border-color: #00c853;
+}
+
+.btn-accent {
+  background: var(--bg-panel);
+  color: var(--accent-orange);
+  border-color: var(--accent-orange);
+}
+.btn-accent:hover {
+  background: var(--accent-orange);
+  color: #000;
+}
+
+.btn-secondary {
+  background: var(--bg-panel);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+.btn-secondary:hover {
+  background: var(--accent-cyan);
+  color: #000;
+}
+
+.btn-generate {
+  width: 100%;
+  font-size: 16px;
+  letter-spacing: 3px;
+}
+
+/* ===== 通道配置区 ===== */
+.channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.channel-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  padding: 10px 12px;
+}
+
+.channel-card.active {
+  border-left: 3px solid var(--accent-green);
+}
+
+.channel-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.channel-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.channel-color-dot {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.channel-type-select {
+  width: 140px;
+  font-size: 13px;
+}
+
+.channel-params {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.channel-param {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.channel-param label {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.channel-param input {
+  width: 100%;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+/* ===== 预设管理 ===== */
+.preset-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preset-save-row,
+.preset-load-row {
+  display: flex;
+  gap: 6px;
+}
+
+.preset-save-row input {
+  flex: 1;
+}
+
+.preset-load-row select {
+  flex: 1;
+}
+
+/* ===== 生成区域 ===== */
+.generate-area {
+  padding: 14px 16px;
+  margin-top: auto;
+  border-top: 2px solid var(--border-color);
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.status-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 0;
+}
+
+.status-ready {
+  background: var(--accent-green);
+}
+
+.status-working {
+  background: var(--accent-orange);
+  animation: blink 0.8s infinite;
+}
+
+.status-success {
+  background: var(--accent-green);
+}
+
+.status-error {
+  background: var(--accent-red);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ===== 预览面板（右侧）===== */
+.preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  overflow: hidden;
+}
+
+.canvas-wrapper {
+  flex: 1;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.channel-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 0 4px;
+  flex-shrink: 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.legend-color {
+  width: 20px;
+  height: 3px;
+  display: inline-block;
+}
+
+/* ===== 提示信息 ===== */
+.tooltip {
+  position: fixed;
+  background: var(--bg-panel);
+  border: 1px solid var(--accent-orange);
+  color: var(--accent-orange);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  margin-top: -38px;
+}
+
+.tooltip.show {
+  opacity: 1;
+}
+
+/* ===== 缩放工具栏 ===== */
+.zoom-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 4px;
+}
+
+.btn-zoom {
+  width: 28px;
+  height: 24px;
+  padding: 0;
+  font-size: 14px;
+  font-family: var(--font-mono);
+  background: var(--bg-panel);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.btn-zoom:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+.btn-zoom:active {
+  background: var(--accent-cyan);
+  color: #000;
+}
+
+.zoom-separator {
+  color: var(--border-color);
+  margin: 0 4px;
+}
+
+.zoom-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.zoom-range-text {
+  font-size: 11px;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+}
+
+/* 通道图例增强 */
+.channel-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 0 4px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  cursor: pointer;
+  user-select: none;
+}
+
+.legend-item.hidden {
+  opacity: 0.35;
+}
+
+.legend-color {
+  width: 20px;
+  height: 3px;
+  display: inline-block;
+}
+
+.legend-check {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--border-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  background: var(--bg-input);
+  flex-shrink: 0;
+}
+
+.legend-item.hidden .legend-check {
+  background: transparent;
+}
+
+/* 框选矩形 */
+.selection-rect {
+  position: absolute;
+  border: 1px dashed var(--accent-orange);
+  background: rgba(255, 145, 0, 0.08);
+  pointer-events: none;
+  z-index: 10;
+}
