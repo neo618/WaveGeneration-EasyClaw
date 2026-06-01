@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多通道波形CSV生成工具</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- 标题栏 -->
+    <header class="app-header">
+      <h1>多通道波形CSV生成工具</h1>
+      <span class="header-version">V1.0</span>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+
+      <!-- 左侧：参数配置区 -->
+      <aside class="config-panel">
+        <!-- 全局参数 -->
+        <section class="panel-section">
+          <div class="section-title">▌全局参数</div>
+          <div class="param-grid">
+            <div class="param-item">
+              <label>时间间隔 <span class="unit">ms</span></label>
+              <input type="number" id="timeInterval" value="2" step="0.1" min="0">
+            </div>
+            <div class="param-item">
+              <label>数据长度 <span class="unit">个</span></label>
+              <input type="number" id="dataLength" value="2048" min="1" step="1">
+            </div>
+            <div class="param-item">
+              <label>通道数 <span class="unit">路</span></label>
+              <input type="number" id="channelNum" value="2" min="1" max="10" step="1">
+            </div>
+          </div>
+        </section>
+
+        <!-- 通道配置 -->
+        <section class="panel-section">
+          <div class="section-title">▌通道配置</div>
+          <div id="channelConfigs" class="channel-list">
+            <!-- 动态生成 -->
+          </div>
+        </section>
+
+        <!-- 预设管理 -->
+        <section class="panel-section">
+          <div class="section-title">▌预设管理</div>
+          <div class="preset-controls">
+            <div class="preset-save-row">
+              <input type="text" id="presetName" placeholder="输入预设名称" maxlength="50">
+              <button id="btnSavePreset" class="btn btn-accent">保存预设</button>
+            </div>
+            <div class="preset-load-row">
+              <select id="presetSelect">
+                <option value="">-- 选择预设 --</option>
+              </select>
+              <button id="btnLoadPreset" class="btn btn-secondary">加载预设</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 生成按钮 -->
+        <div class="generate-area">
+          <button id="btnGenerate" class="btn btn-primary btn-generate">▶ 生成 CSV</button>
+          <div class="status-bar">
+            <span id="statusText" class="status-text">就绪</span>
+            <div id="statusIndicator" class="status-indicator status-ready"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- 右侧：波形预览区 -->
+      <main class="preview-panel">
+        <div class="section-title">▌波形预览</div>
+        <div class="zoom-toolbar">
+          <button id="btnZoomIn" class="btn btn-zoom" title="放大">＋</button>
+          <button id="btnZoomOut" class="btn btn-zoom" title="缩小">－</button>
+          <button id="btnZoomFit" class="btn btn-zoom" title="适应窗口">⊞</button>
+          <button id="btnZoomReset" class="btn btn-zoom" title="重置">↺</button>
+          <span class="zoom-separator">|</span>
+          <span class="zoom-label">X:</span>
+          <span id="zoomRangeX" class="zoom-range-text">0 - 4094 ms</span>
+        </div>
+        <div class="canvas-wrapper" id="canvasWrapper">
+          <canvas id="waveCanvas"></canvas>
+        </div>
+        <div class="channel-legend" id="channelLegend">
+          <!-- 动态生成图例 -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
